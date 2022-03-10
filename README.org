@@ -1,0 +1,12 @@
+# yo-kit
+
+*yo 微服务框架常用库，原来的 cbl 重新抽象。不依赖 yo 任何组件，不包含任何业务逻辑（与业务逻辑相关的工具类抽象到 yo framework 中）。*
+
+#+begin_src
+go test -v -count=1 ./...
+#+end_src
+
+
+#+begin_src
+GOPRIVATE="gitlab.com/c3441" go get -u gitlab.com/c3441/yo-kit@main
+#+end_src
