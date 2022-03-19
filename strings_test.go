@@ -43,3 +43,8 @@ func TestIntSliceToString(t *testing.T) {
 func TestHidePhonenumSensitive(t *testing.T) {
 	assert.Equal(t, "131****3456", HidePhonenumSensitive("13100003456"))
 }
+
+func TestFormatFloat(t *testing.T) {
+	assert.Equal(t, "20.132", FormatFloat(20.132000))
+	assert.Equal(t, "0.130002", FormatFloat(0.130002))
+}

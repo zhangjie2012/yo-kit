@@ -2,6 +2,7 @@ package kit
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -53,4 +54,10 @@ func HidePhonenumSensitive(s string) string {
 		return s
 	}
 	return s[:3] + "****" + s[len(s)-4:]
+}
+
+// FormatFloat: float to string, trim tail zero
+// https://stackoverflow.com/questions/31289409/format-a-float-to-n-decimal-places-and-no-trailing-zeros
+func FormatFloat(f float64) string {
+	return strconv.FormatFloat(f, 'f', -1, 64)
 }
