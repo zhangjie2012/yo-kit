@@ -1,4 +1,4 @@
-module gitlab.com/c3441/yo-kit
+module github.com/zhangjie2012/yo-kit
 
 go 1.18
 
