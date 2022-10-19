@@ -51,3 +51,15 @@ type TimePair struct {
 	StartTime time.Time `json:"start_time" yaml:"start_time"`
 	EndTime   time.Time `json:"end_time" yaml:"end_time"`
 }
+
+// SF64Pair <string, float64> pair
+type SF64Pair struct {
+	Key string  `json:"key" yaml:"key"`
+	Val float64 `json:"val" yaml:"val"`
+}
+
+// SIPair <string, int> pair
+type SIPair struct {
+	Key string `json:"key" yaml:"key"`
+	Val int    `json:"val" yaml:"val"`
+}
