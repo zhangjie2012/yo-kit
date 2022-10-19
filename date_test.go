@@ -199,3 +199,78 @@ func TestRangeWeek(t *testing.T) {
 		t.Log(d)
 	}
 }
+
+func TestTraverseTimeRangeByMonth(t *testing.T) {
+	loc := time.Now().Location()
+	{
+		start := time.Date(2022, 6, 13, 20, 58, 30, 0, loc)
+		end := time.Date(2022, 10, 18, 17, 51, 30, 0, loc)
+		pairs := TraverseTimeRangeByMonth(start, end)
+		assert.EqualValues(t, 5, len(pairs))
+		for _, p := range pairs {
+			t.Log(p.StartTime, p.EndTime)
+		}
+	}
+	{
+		start := time.Date(2022, 6, 13, 17, 51, 30, 0, loc)
+		end := time.Date(2022, 6, 13, 20, 58, 30, 0, loc)
+		pairs := TraverseTimeRangeByMonth(start, end)
+		assert.EqualValues(t, 1, len(pairs))
+	}
+	{
+		start := time.Date(2022, 7, 13, 17, 51, 30, 0, loc)
+		end := time.Date(2021, 6, 13, 20, 58, 30, 0, loc)
+		pairs := TraverseTimeRangeByMonth(start, end)
+		assert.EqualValues(t, 0, len(pairs))
+	}
+}
+
+func TestTraverseTimeRangeByWeek(t *testing.T) {
+	loc := time.Now().Location()
+	{
+		start := time.Date(2022, 9, 28, 20, 58, 30, 0, loc)
+		end := time.Date(2022, 10, 18, 17, 51, 30, 0, loc)
+		pairs := TraverseTimeRangeByWeek(start, end)
+		assert.EqualValues(t, 4, len(pairs))
+		for _, p := range pairs {
+			t.Log(p.StartTime, p.EndTime)
+		}
+	}
+	{
+		start := time.Date(2022, 6, 13, 17, 51, 30, 0, loc)
+		end := time.Date(2022, 6, 13, 20, 58, 30, 0, loc)
+		pairs := TraverseTimeRangeByWeek(start, end)
+		assert.EqualValues(t, 1, len(pairs))
+	}
+	{
+		start := time.Date(2022, 7, 13, 17, 51, 30, 0, loc)
+		end := time.Date(2021, 6, 13, 20, 58, 30, 0, loc)
+		pairs := TraverseTimeRangeByWeek(start, end)
+		assert.EqualValues(t, 0, len(pairs))
+	}
+}
+
+func TestTraverseTimeRangeByYear(t *testing.T) {
+	loc := time.Now().Location()
+	{
+		start := time.Date(2020, 6, 13, 20, 58, 30, 0, loc)
+		end := time.Date(2022, 10, 18, 17, 51, 30, 0, loc)
+		pairs := TraverseTimeRangeByYear(start, end)
+		assert.EqualValues(t, 3, len(pairs))
+		for _, p := range pairs {
+			t.Log(p.StartTime, p.EndTime)
+		}
+	}
+	{
+		start := time.Date(2022, 6, 13, 17, 51, 30, 0, loc)
+		end := time.Date(2022, 6, 13, 20, 58, 30, 0, loc)
+		pairs := TraverseTimeRangeByYear(start, end)
+		assert.EqualValues(t, 1, len(pairs))
+	}
+	{
+		start := time.Date(2022, 7, 13, 17, 51, 30, 0, loc)
+		end := time.Date(2021, 6, 13, 20, 58, 30, 0, loc)
+		pairs := TraverseTimeRangeByYear(start, end)
+		assert.EqualValues(t, 0, len(pairs))
+	}
+}

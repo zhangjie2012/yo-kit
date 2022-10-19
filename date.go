@@ -4,12 +4,16 @@ import (
 	"fmt"
 	"math"
 	"time"
+
+	"github.com/zhangjie2012/yo-kit/datastruct"
 )
 
+// StartOfDay one day start time
 func StartOfDay(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 }
 
+// EndOfDay one day end time
 func EndOfDay(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, int(time.Second)-1, t.Location())
 }
@@ -36,14 +40,17 @@ func RangeMonth(t time.Time) []time.Time {
 	return dates
 }
 
+// StartOfYear one year start time
 func StartOfYear(t time.Time) time.Time {
 	return time.Date(t.Year(), time.January, 1, 0, 0, 0, 0, t.Location())
 }
 
+// EndOfYear one year end time
 func EndOfYear(t time.Time) time.Time {
 	return time.Date(t.Year()+1, time.January, 0, 23, 59, 59, 999999999, t.Location())
 }
 
+// RangeYear range year every day date
 func RangeYear(t time.Time) []time.Time {
 	s := StartOfYear(t)
 
@@ -71,6 +78,7 @@ func EndOfWeek(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 999999999, t.Location())
 }
 
+// RangeWeek range week every day date
 func RangeWeek(t time.Time) []time.Time {
 	d := StartOfWeek(t)
 
@@ -83,6 +91,7 @@ func RangeWeek(t time.Time) []time.Time {
 	return dates
 }
 
+// FormatDayTime 按照一天不同的时间段转换成友好的中文描述
 func FormatDayTime(t time.Time, showSec bool) string {
 	h := t.Hour()
 
@@ -132,6 +141,7 @@ func FormatDayTime(t time.Time, showSec bool) string {
 	return s
 }
 
+// DayOfWeekCN 每天的星期中文描述
 func DayOfWeekCN(n int) string {
 	switch n {
 	case 0:
@@ -153,6 +163,7 @@ func DayOfWeekCN(n int) string {
 	}
 }
 
+// DurationString 时间区间描述
 func DurationString(d time.Duration) string {
 	sec := d.Seconds()
 
@@ -184,4 +195,79 @@ func DurationString(d time.Duration) string {
 
 	interval = math.Floor(sec)
 	return fmt.Sprintf("%d 秒", int64(interval))
+}
+
+// TraverseTimeRangeByMonth 在 start ~ end 范围内，以月为单位遍历
+func TraverseTimeRangeByMonth(start time.Time, end time.Time) (pairs []*datastruct.TimePair) {
+	pairs = make([]*datastruct.TimePair, 0)
+
+	startm := StartOfMonth(start)
+	endm := StartOfMonth(end)
+
+	if startm.After(endm) {
+		return
+	}
+
+	for {
+		pairs = append(pairs, &datastruct.TimePair{
+			StartTime: startm,
+			EndTime:   EndOfMonth(startm),
+		})
+		startm = startm.AddDate(0, 1, 0) // next
+		if startm.After(endm) {
+			break
+		}
+	}
+
+	return
+}
+
+// TraverseTimeRangeByWeek 在 start ~ end 范围内，以周为单位遍历
+func TraverseTimeRangeByWeek(start time.Time, end time.Time) (pairs []*datastruct.TimePair) {
+	pairs = make([]*datastruct.TimePair, 0)
+
+	startm := StartOfWeek(start)
+	endm := StartOfWeek(end)
+
+	if startm.After(endm) {
+		return
+	}
+
+	for {
+		pairs = append(pairs, &datastruct.TimePair{
+			StartTime: startm,
+			EndTime:   EndOfWeek(startm),
+		})
+		startm = startm.AddDate(0, 0, 7) // next
+		if startm.After(endm) {
+			break
+		}
+	}
+
+	return
+}
+
+// TraverseTimeRangeByYear 在 start ~ end 范围内，以年为单位遍历
+func TraverseTimeRangeByYear(start time.Time, end time.Time) (pairs []*datastruct.TimePair) {
+	pairs = make([]*datastruct.TimePair, 0)
+
+	startm := StartOfYear(start)
+	endm := StartOfYear(end)
+
+	if startm.After(endm) {
+		return
+	}
+
+	for {
+		pairs = append(pairs, &datastruct.TimePair{
+			StartTime: startm,
+			EndTime:   EndOfYear(startm),
+		})
+		startm = startm.AddDate(1, 0, 0) // next
+		if startm.After(endm) {
+			break
+		}
+	}
+
+	return
 }

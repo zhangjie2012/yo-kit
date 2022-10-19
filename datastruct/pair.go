@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"time"
 )
 
 // Pair a string key/value pair
@@ -43,4 +44,10 @@ func (pairs Pairs) ToString(kvSep, pSep string) string {
 		ss = append(ss, fmt.Sprintf(`%s%s"%s"`, p.Key, kvSep, p.Val))
 	}
 	return strings.Join(ss, pSep)
+}
+
+// TimePair time range
+type TimePair struct {
+	StartTime time.Time `json:"start_time" yaml:"start_time"`
+	EndTime   time.Time `json:"end_time" yaml:"end_time"`
 }
