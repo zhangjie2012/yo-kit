@@ -163,6 +163,28 @@ func DayOfWeekCN(n int) string {
 	}
 }
 
+// DayOfWeekCN2 每天的周几中文描述
+func DayOfWeekCN2(n int) string {
+	switch n {
+	case 0:
+		return "周日"
+	case 1:
+		return "周一"
+	case 2:
+		return "周二"
+	case 3:
+		return "周三"
+	case 4:
+		return "周四"
+	case 5:
+		return "周五"
+	case 6:
+		return "周六"
+	default:
+		return "未知"
+	}
+}
+
 // DurationString 时间区间描述
 func DurationString(d time.Duration) string {
 	sec := d.Seconds()
